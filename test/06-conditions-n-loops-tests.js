@@ -312,6 +312,7 @@ describe('06-conditions-n-loops-tasks', function() {
             4222222222222,
             5019717010103742,
             6331101999990016,
+            54891243456789010
         ].forEach(ccn => {
             assert(
                 tasks.isCreditCardNumber(ccn),
@@ -325,8 +326,7 @@ describe('06-conditions-n-loops-tasks', function() {
             5436468789016589,
             4916123456789012,
             371449635398430,
-            9112893456789010,
-            54891243456789010
+            9112893456789010
         ].forEach(ccn => {
             assert(
                 tasks.isCreditCardNumber(ccn) == false,
@@ -334,6 +334,13 @@ describe('06-conditions-n-loops-tasks', function() {
             )
         });
 
+    });
+
+    it.optional('getDigitalRoot should return the digital root of integer', () => {
+        assert.equal(6, tasks.getDigitalRoot(12345));
+        assert.equal(2, tasks.getDigitalRoot(23456));
+        assert.equal(1, tasks.getDigitalRoot(10000));
+        assert.equal(8, tasks.getDigitalRoot(165536));
     });
 
 

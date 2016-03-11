@@ -107,7 +107,7 @@ function getLinearEquationRoot(a, b) {
  *
  * @example:
  *   (1,0) (0,1)     => π/2
- *   (0,1) (0,-1)    => -π
+ *   (0,1) (0,-1)    => π
  *   (0,-1) (1,0)    => π/2
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
@@ -117,7 +117,7 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
 
     result /= ( Math.sqrt(x1 * x1 + y1 * y1) * Math.sqrt(x2 * 2 + y2 * y2) );
 
-    return (result < 0 ? -1 : 1) * Math.acos(result);
+    return Math.acos(result);
 }
 
 /**
