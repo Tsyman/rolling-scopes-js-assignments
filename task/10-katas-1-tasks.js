@@ -5,7 +5,7 @@
  * See details here:
  * https://en.wikipedia.org/wiki/Points_of_the_compass#32_cardinal_points
  *
- * @return {array}
+ * @return {Array}
  *
  * Example of return :
  *  [
@@ -17,8 +17,37 @@
  *  ]
  */
 function createCompassPoints() {
-    throw new Error('Not implemented');
-    var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    function* directCoors(from, to, dir) {
+        let result = [`${from}b${to}`, `${from}${from}${to}`, `${from}${to}b${from}`, `${from}${to}`, `${from}${to}b${to}`, `${to}${from}${to}`, `${to}b${from}`];
+
+        if (dir == "f")
+            result.reverse();
+
+        for (let i of result) {
+            yield i;
+        }
+    }
+
+    let result = [],
+        azimuth = 0,
+        items = [
+            {dir: "N", func: directCoors("N", "E", "d")},
+            {dir: "E", func: directCoors("S", "E", "f")},
+            {dir: "S", func: directCoors("S", "W", "d")},
+            {dir: "W", func: directCoors("N", "W", "f")}
+        ];
+
+    for (let item of items) {
+        result.push({abbreviation: item.dir, azimuth: azimuth});
+        azimuth += 11.25;
+
+        for (let i = 0; i < 7; i++) {
+            result.push({abbreviation: item.func.next().value, azimuth: azimuth});
+            azimuth += 11.25;
+        }
+    }
+
+    return result;
 }
 
 
@@ -56,7 +85,23 @@ function createCompassPoints() {
  *   'nothing to do' => 'nothing to do'
  */
 function* expandBraces(str) {
-    throw new Error('Not implemented');
+    let queue = [], regex = new RegExp("\{([0-9a-zA-Z\.,]+)\}", 'i'), itemSet = new Set;
+    queue.push(str);
+
+    while (queue.length) {
+        let item = queue.shift();
+        let matches = item.match(regex);
+
+        if (matches != null) {
+            let array = matches[1].split(',');
+            for (let i of array) {
+                queue.push(item.replace(matches[0], i));
+            }
+        } else if (!itemSet.has(item)) {
+            itemSet.add(item);
+            yield item;
+        }
+    }
 }
 
 
@@ -69,7 +114,7 @@ function* expandBraces(str) {
  * and zigzag path here: https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/JPEG_ZigZag.svg/220px-JPEG_ZigZag.svg.png
  *
  * @param {number} n - matrix dimension
- * @return {array}  n x n array of zigzag path
+ * @return {Array}  n x n array of zigzag path
  *
  * @example
  *   1  => [[0]]
@@ -88,12 +133,73 @@ function* expandBraces(str) {
  *
  */
 function getZigZagMatrix(n) {
-    throw new Error('Not implemented');
+    function* nextStepGenerator(n) {
+        function swap(dir) {
+            return dir == 1 ? 0 : 1;
+        }
+
+        let tmp = n * n, i = 0, j = 0, dir = 0;
+
+        while (tmp--) {
+            yield {x: i, y: j};
+
+            // dir = 0  --  UP,  dir = 1  --  DOWN
+            if (dir == 0) {
+                if (j == n - 1) {
+                    i++;
+                    dir = swap(dir);
+                    continue;
+                }
+
+                if (i == 0) {
+                    j++;
+                    dir = swap(dir);
+                    continue;
+                }
+
+                i--;
+                j++;
+            } else {
+                if (i == n - 1) {
+                    j++;
+                    dir = swap(dir);
+                    continue;
+                }
+
+                if (j == 0) {
+                    i++;
+                    dir = swap(dir);
+                    continue;
+                }
+
+                i++;
+                j--;
+            }
+        }
+    }
+
+    let result = new Array(n), gen = nextStepGenerator(n);
+    result.fill(null);
+    result.forEach((item, index) => {
+        let arr = new Array(n);
+        arr.fill(0);
+
+        result[index] = arr;
+    });
+
+
+    for (let i = 0; i < n * n; i++) {
+        let stage = gen.next().value;
+
+        result[stage["x"]][stage["y"]] = i;
+    }
+
+    return result;
 }
 
 
 /**
- * Returns true if specified subset of dominoes can be placed in a row accroding to the game rules.
+ * Returns true if specified subset of dominoes can be placed in a row according to the game rules.
  * Dominoes details see at: https://en.wikipedia.org/wiki/Dominoes
  *
  * Each domino tile presented as an array [x,y] of tile value.
@@ -102,7 +208,7 @@ function getZigZagMatrix(n) {
  * NOTE that as in usual dominoes playing any pair [i, j] can also be treated as [j, i].
  *
  * @params {array} dominoes
- * @return {bool}
+ * @return {Boolean}
  *
  * @example
  *
@@ -113,7 +219,32 @@ function getZigZagMatrix(n) {
  *
  */
 function canDominoesMakeRow(dominoes) {
-    throw new Error('Not implemented');
+    function dfs(current, value, left) {
+        if (left == 0) {
+            result = true;
+            return;
+        }
+
+        visited[current] = true;
+
+        for (let i = 0; i < dominoes.length; i++) if (!visited[i]) {
+            if (dominoes[i].indexOf(value) != -1) {
+                dfs(i, dominoes[i][0] == value ? dominoes[i][1] : dominoes[i][0], left - 1);
+            }
+        }
+
+        visited[current] = false;
+    }
+
+    let result = false, visited = new Array(dominoes.length);
+    visited.fill(false);
+
+    for (let i = 0; i < dominoes.length; i++) {
+        dfs(i, dominoes[i][0], dominoes.length - 1);
+        dfs(i, dominoes[i][1], dominoes.length - 1);
+    }
+
+    return result;
 }
 
 
@@ -126,8 +257,8 @@ function canDominoesMakeRow(dominoes) {
  *     (The range includes all integers in the interval including both endpoints)
  *     The range syntax is to be used only for, and for every range that expands to more than two values.
  *
- * @params {array} nums
- * @return {bool}
+ * @params {Array} nums
+ * @return {String}
  *
  * @example
  *
@@ -137,13 +268,46 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
+    let result = {
+        string: "",
+        add: (s) => {
+            if (result.string != "")
+                result.string += ",";
+
+            result.string += s;
+        },
+        pack: (a, b) => {
+            if (a == b)
+                result.add(a);
+            else if (Math.abs(a - b) == 1)
+                result.add(`${a},${b}`);
+            else
+                result.add(`${a}-${b}`);
+        }
+    };
+    let from = 0;
+    nums.sort((a, b)=> a > b ? 1 : -1);
+
+    if (nums.length == 1)
+        return nums[0];
+
+    for (let j = from + 1; j < nums.length; j++) {
+        if (nums[j] - nums[j - 1] != 1) {
+            result.pack(nums[from], nums[j - 1]);
+            from = j;
+        }
+        if (j == nums.length - 1) {
+            result.pack(nums[from], nums[j]);
+        }
+    }
+
+    return result.string;
 }
 
 module.exports = {
-    createCompassPoints : createCompassPoints,
-    expandBraces : expandBraces,
-    getZigZagMatrix : getZigZagMatrix,
-    canDominoesMakeRow : canDominoesMakeRow,
-    extractRanges : extractRanges
+    createCompassPoints: createCompassPoints,
+    expandBraces: expandBraces,
+    getZigZagMatrix: getZigZagMatrix,
+    canDominoesMakeRow: canDominoesMakeRow,
+    extractRanges: extractRanges
 };
