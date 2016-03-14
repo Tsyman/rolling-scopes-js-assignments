@@ -101,7 +101,7 @@ describe('09-functions-n-closures-tasks', function() {
             log,
             'cos(3.141592653589793) starts\n'
            +'cos(3.141592653589793) ends\n',
-            'logger function shoud log the start and end of the specified function');
+            'logger function should log the start and end of the specified function');
     });
 
 
@@ -113,7 +113,7 @@ describe('09-functions-n-closures-tasks', function() {
             assert.equal(
                 log,
                 'testLogger(["expected","test",1],0) starts\n',
-                'logger function shoud log the start of specified function before calling'
+                'logger function should log the start of specified function before calling'
             );
             isCalling = true;
             return param[index];
@@ -130,7 +130,7 @@ describe('09-functions-n-closures-tasks', function() {
             log,
             'testLogger(["expected","test",1],0) starts\n'
            +'testLogger(["expected","test",1],0) ends\n',
-            'logger function shoud log the end of specified function after calling');
+            'logger function should log the end of specified function after calling');
     });
 
 

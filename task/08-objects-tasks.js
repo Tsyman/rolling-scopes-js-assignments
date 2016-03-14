@@ -210,7 +210,7 @@ MySimpleSelector.prototype = {
           this.stringifyItem(d.attr, "[", "]") +
           this.stringifyItem(d.pseudoClass, ":", "") +
           this.stringifyItem(d.pseudoElement, "::", "");
-    },
+    }
 };
 
 function MyCombinedSelector(selector1, combinator, selector2) {
