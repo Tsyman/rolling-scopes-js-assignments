@@ -211,7 +211,7 @@ function roundToPowerOfTen(num, pow) {
  *   11 => true
  *   12 => false
  *   16 => false
- *   17 => false
+ *   17 => true
  */
 function isPrime(n) {
     let prime = true;

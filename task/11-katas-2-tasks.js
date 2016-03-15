@@ -34,7 +34,59 @@
  *
  */
 function parseBankAccount(bankAccount) {
-    throw new Error('Not implemented');
+    let map = new Map;
+    map.set(
+        " _ " +
+        "| |" +
+        "|_|", 0);
+    map.set(
+        "   " +
+        "  |" +
+        "  |", 1);
+    map.set(
+        " _ " +
+        " _|" +
+        "|_ ", 2);
+    map.set(
+        " _ " +
+        " _|" +
+        " _|", 3);
+    map.set(
+        "   " +
+        "|_|" +
+        "  |", 4);
+    map.set(
+        " _ " +
+        "|_ " +
+        " _|", 5);
+    map.set(
+        " _ " +
+        "|_ " +
+        "|_|", 6);
+    map.set(
+        " _ " +
+        "  |" +
+        "  |", 7);
+    map.set(
+        " _ " +
+        "|_|" +
+        "|_|", 8);
+    map.set(
+        " _ " +
+        "|_|" +
+        " _|", 9);
+
+    let lines = bankAccount.split("\n");
+    let i = 0, result = "";
+
+    while (i < lines[0].length) {
+        let s = lines[0].substr(i, 3) + lines[1].substr(i, 3) + lines[2].substr(i, 3);
+        result += map.get(s);
+
+        i += 3;
+    }
+
+    return Number(result);
 }
 
 
@@ -63,7 +115,17 @@ function parseBankAccount(bankAccount) {
  *                                                                                                'characters.'
  */
 function* wrapText(text, columns) {
-    throw new Error('Not implemented');
+    while (text.length) {
+        let i = columns;
+
+        if (text.length > i) {
+            while (text[i] != " ")
+                i--;
+        }
+
+        yield text.substr(0, i);
+        text = text.substr(i + 1);
+    }
 }
 
 
@@ -97,9 +159,62 @@ const PokerRank = {
     TwoPairs: 2,
     OnePair: 1,
     HighCard: 0
-}
+};
 
 function getPokerHandRank(hand) {
+    hand = ['4♣', '4♦', '4♥', '4♠', '10♥'];
+    for (let i = 0; i < 5; i++) {
+        let sec = hand[i].length == 2 ? 1 : 2, dig = hand[i].substr(0, sec);
+
+        if (Number.isNaN(Number(dig))) {
+            if (dig == "J")
+                dig = 11;
+            if (dig == "Q")
+                dig = 12;
+            if (dig == "K")
+                dig = 13;
+            if (dig == "A")
+                dig = 14;
+        } else {
+            dig = Number(dig);
+        }
+
+        hand[i] = {dig: dig, mask: hand[i].substr(sec)};
+    }
+    hand.sort((a, b) => {
+        return a.dig > b.dig ? 1 : -1;
+    });
+
+    // StraightFlush
+    let isStraightFlush = true;
+    for (let i = 1; i < 5; i++) {
+        if (i < 4 && hand[i].dig - hand[i - 1].dig != 1)
+            isStraightFlush = false;
+
+        if (hand[i].mask != hand[i - 1].mask)
+            isStraightFlush = false;
+    }
+
+    if (isStraightFlush) {
+        if (hand[4].dig == 14) {
+            if (hand[4].dig - hand[3].dig != 1 && hand[0].dig != 2)
+                isStraightFlush = false;
+        }
+    }
+
+    // FourOfKind
+    let isFourOfKind = false, firstDigs = true, lastDigs = true;
+    for (let i = 0; i < 5; i++) {
+        if (i < 3 && hand[i].dig != hand[i + 1].dig)
+            firstDigs = false;
+
+        if (i > 1 && hand[i].dig != hand[i - 1].dig)
+            lastDigs = false;
+    }
+    isFourOfKind = firstDigs || lastDigs;
+
+
+    console.log(hand, isStraightFlush, isFourOfKind);
     throw new Error('Not implemented');
 }
 
@@ -110,10 +225,10 @@ function getPokerHandRank(hand) {
  * The task is to break the figure in the rectangles it is made of.
  *
  * NOTE: The order of rectanles does not matter.
- * 
+ *
  * @param {string} figure
  * @return {Iterable.<string>} decomposition to basic parts
- * 
+ *
  * @example
  *
  *    '+------------+\n'+
@@ -135,12 +250,12 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-   throw new Error('Not implemented');
+    throw new Error('Not implemented');
 }
 
 
 module.exports = {
-    parseBankAccount : parseBankAccount,
+    parseBankAccount: parseBankAccount,
     wrapText: wrapText,
     PokerRank: PokerRank,
     getPokerHandRank: getPokerHandRank,

@@ -60,6 +60,7 @@ function getStringFromTemplate(firstName, lastName) {
 /**
  * Extracts a name from template string 'Hello, First_Name Last_Name!'.
  *
+ * @param {string} value
  * @return {string}
  *
  * @example
