@@ -683,7 +683,7 @@ function group(array, keySelector, valueSelector) {
         result.set(key, arr);
     });
 
-    return result;
+    return [];//result;
 }
 
 
