@@ -37,7 +37,7 @@ function createCompassPoints() {
             {dir: "W", func: directCoors("N", "W", "f")}
         ];
 
-    for (let item of items) {
+    items.forEach((item) => {
         result.push({abbreviation: item.dir, azimuth: azimuth});
         azimuth += 11.25;
 
@@ -45,7 +45,7 @@ function createCompassPoints() {
             result.push({abbreviation: item.func.next().value, azimuth: azimuth});
             azimuth += 11.25;
         }
-    }
+    });
 
     return result;
 }
@@ -94,9 +94,10 @@ function* expandBraces(str) {
 
         if (matches != null) {
             let array = matches[1].split(',');
-            for (let i of array) {
-                queue.push(item.replace(matches[0], i));
-            }
+
+            array.forEach((current) => {
+                queue.push(item.replace(matches[0], current));
+            });
         } else if (!itemSet.has(item)) {
             itemSet.add(item);
             yield item;
