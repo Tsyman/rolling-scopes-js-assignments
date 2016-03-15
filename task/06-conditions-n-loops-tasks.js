@@ -17,7 +17,7 @@
  * 4) for numbers which are multiples of both three and five return 'FizzBuzz'
  *
  * @param {number} num
- * @return {any}
+ * @return {string}
  *
  * @example
  *   2 =>  2
@@ -103,7 +103,7 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a, b, c) {
-    let max = Math.max(a, Math.max(b, c)),
+    let max = Math.max(a, b, c),
         sum = a + b + c - max;
 
     return max < sum;
@@ -148,8 +148,6 @@ function doRectanglesOverlap(rect1, rect2) {
     }
 
     return !!((rect1.top <= rect2.top && rect1.top + rect1.width >= rect2.top) && (rect1.left <= rect2.left && rect1.left + rect1.height >= rect2.left));
-
-
 }
 
 
@@ -338,7 +336,7 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    function sum(dig) {
+    let sum = (dig) => {
         let arr = String(dig).split(''),
             result = 0;
 
@@ -346,7 +344,7 @@ function getDigitalRoot(num) {
             result += parseInt(arr[i], 10);
 
         return result;
-    }
+    };
 
     while (num > 10)
         num = sum(num);
@@ -384,7 +382,6 @@ function isBracketsBalanced(str) {
 
         if (['[', '{', '(', '<'].indexOf(c) != -1) {
             stack.push(c);
-
             continue;
         }
 
@@ -436,7 +433,7 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    function round(time) {
+    let round = (time) => {
         let dig = parseInt(time, 10),
             ceil = time - dig;
 
@@ -444,8 +441,7 @@ function timespanToHumanString(startDate, endDate) {
             dig++;
 
         return dig;
-    }
-
+    };
     let diff = endDate - startDate;
 
     if (diff <= 45000)
@@ -513,7 +509,7 @@ function getCommonDirectoryPath(pathes) {
     let size = 0,
         result = "";
 
-    pathes.forEach(function (item, index) {
+    pathes.forEach((item, index) => {
         item = item.split('/');
         pathes[index] = item;
 
