@@ -44,8 +44,8 @@ function getCicleCircumference(radius) {
 /**
  * Returns an average of two given numbers.
  *
- * @param {numder} value1
- * @param {number} value2
+ * @param {Number} value1
+ * @param {Number} value2
  * @return {number}
  *
  * @example:
@@ -214,14 +214,12 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-    let prime = true;
-
     for (let i = 2; i < n; i++) {
         if (n % i == 0)
-            prime = false;
+            return false;
     }
 
-    return prime;
+    return true;
 }
 
 /**
