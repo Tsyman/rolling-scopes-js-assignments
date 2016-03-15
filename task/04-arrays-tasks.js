@@ -58,7 +58,7 @@ function generateOdds(len) {
  *    [] => []
  */
 function doubleArray(arr) {
-    return ([]).concat(arr, arr);
+    return [].concat(arr, arr);
 }
 
 
@@ -74,13 +74,7 @@ function doubleArray(arr) {
  *    [] => []
  */
 function getArrayOfPositives(arr) {
-    function isPositive(value) {
-        return value > 0;
-    }
-
-    arr = arr.filter(isPositive);
-
-    return arr;
+    return arr.filter(value => value > 0);
 }
 
 /**
@@ -95,13 +89,9 @@ function getArrayOfPositives(arr) {
  *    [ 'cat, 'dog', 'raccon' ] => [ 'cat', 'dog', 'racoon' ]
  */
 function getArrayOfStrings(arr) {
-    function isString(value) {
+    return arr.filter(value => {
         return typeof value === 'string' || value instanceof String;
-    }
-
-    arr = arr.filter(isString);
-
-    return arr;
+    });
 }
 
 /**
@@ -140,9 +130,7 @@ function removeFalsyValues(arr) {
         return true;
     }
 
-    arr = arr.filter(isNotFalsy);
-
-    return arr;
+    return arr.filter(isNotFalsy);
 }
 
 /**
@@ -156,11 +144,9 @@ function removeFalsyValues(arr) {
  *    [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]  => [ 'A', 'B', 'C', 'D', 'E', 'F', 'G' ]
  */
 function getUpperCaseStrings(arr) {
-    arr = arr.map(function (value) {
+    return arr.map(function (value) {
         return value.toUpperCase();
     });
-
-    return arr;
 }
 
 
@@ -175,11 +161,9 @@ function getUpperCaseStrings(arr) {
  *    [ 'angular', 'react', 'ember' ] => [ 7, 5, 5 ]
  */
 function getStringsLength(arr) {
-    arr = arr.map(function (value) {
+    return arr.map(function (value) {
         return value.length;
     });
-
-    return arr;
 }
 
 /**
@@ -223,11 +207,7 @@ function getHead(arr, n) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'b', 'c', 'd' ]
  */
 function getTail(arr, n) {
-    arr = arr.reverse();
-
-    arr = arr.slice(0, n);
-
-    return arr.reverse();
+    return arr.reverse().slice(0, n).reverse();
 }
 
 
@@ -252,16 +232,14 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-    var result = "";
-
-    arr.map(function (value, index) {
-        result += value.toString();
+    return arr.reduce((previous, current, index) => {
+        previous += current.toString();
 
         if (index != arr.length - 1)
-            result += "\n";
-    });
+            previous += "\n";
 
-    return result;
+        return previous;
+    }, "");
 }
 
 /**
@@ -318,11 +296,9 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-    arr = arr.filter(function (value, index) {
+    return arr.filter((value, index) => {
         return !(index % 2 == 0);
     });
-
-    return arr;
 }
 
 
@@ -341,16 +317,12 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-    let result = [];
-
-    arr.map(function (value, index) {
+    return arr.reduce((previous, current, index) => {
         let items = new Array(index + 1);
-        items.fill(value);
+        items.fill(current);
 
-        result = result.concat(items);
-    });
-
-    return result;
+        return previous.concat(items);
+    }, []);
 }
 
 
@@ -368,11 +340,11 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-    arr = arr.sort(function (a, b) {
-        return a > b ? -1 : (a < b ? 1 : 0);
-    });
-
-    return arr.slice(0, 3);
+    return arr
+        .sort((a, b) => {
+            return a > b ? -1 : 1;
+        })
+        .slice(0, 3);
 }
 
 
@@ -389,14 +361,9 @@ function get3TopItems(arr) {
  *   [ null, 1, 'elephant' ] => 1
  */
 function getPositivesCount(arr) {
-    var number = 0;
-
-    arr.map(function (value) {
-        if (value > 0)
-            number++;
-    });
-
-    return number;
+    return arr.reduce((previous, current) => {
+        return current > 0 ? previous + 1 : previous;
+    }, 0);
 }
 
 /**
@@ -413,7 +380,7 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-    return arr.sort(function (a, b) {
+    return arr.sort((a, b) => {
         let items = {
             zero: 0,
             one: 1,
@@ -430,7 +397,7 @@ function sortDigitNamesByNumericOrder(arr) {
         a = items[a];
         b = items[b];
 
-        return a > b ? 1 : (a < b ? -1 : 0);
+        return a > b ? 1 : -1;
     });
 }
 
@@ -447,8 +414,8 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-    return arr.reduce(function (a, b) {
-        return a + b;
+    return arr.reduce((previous, current) => {
+        return previous + current;
     }, 0);
 }
 
@@ -487,8 +454,8 @@ function getFalsyValuesCount(arr) {
         return false;
     }
 
-    return arr.reduce(function (a, b) {
-        return a + isFalsy(b);
+    return arr.reduce((previous, current) => {
+        return previous + isFalsy(current);
     }, 0);
 }
 
@@ -507,8 +474,8 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurences(arr, item) {
-    return arr.reduce(function (a, b) {
-        return a + (b === item ? 1 : 0);
+    return arr.reduce((previous, current) => {
+        return previous + (current === item ? 1 : 0);
     }, 0);
 }
 
@@ -553,7 +520,7 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-    return arr.sort(function (a, b) {
+    return arr.sort((a, b) => {
         if (a.country > b.country)
             return 1;
         else if (a.country < b.country)
@@ -589,15 +556,13 @@ function getIdentityMatrix(n) {
     let result = new Array(n);
     result.fill([]);
 
-    result = result.map(function (item, index) {
+    return result.map(function (item, index) {
         item = new Array(n);
         item.fill(0);
         item[index] = 1;
 
         return item;
     });
-
-    return result;
 }
 
 /**
@@ -614,15 +579,14 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-    let result = new Array(end - start + 1);
+    let result = new Array(end - start);
     result.fill(0);
 
-    result.reduce(function (previous, current, index) {
-        result[index] = previous + 1;
-        return previous + 1;
-    }, start - 1);
+    return result.reduce(function (previous) {
+        previous.push(previous[previous.length - 1] + 1);
 
-    return result;
+        return previous;
+    }, [start]);
 }
 
 /**
@@ -671,19 +635,17 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-    let result = new Map;
+    return array.reduce((previous, current) => {
+        let key = keySelector(current),
+            value = valueSelector(current);
 
-    array.map(function (item) {
-        let key = keySelector(item),
-            value = valueSelector(item);
-
-        let arr = result.get(key) || [];
+        let arr = previous.get(key) || [];
         arr.push(value);
 
-        result.set(key, arr);
-    });
+        previous.set(key, arr);
 
-    return [];//result;
+        return previous;
+    }, new Map);
 }
 
 
@@ -699,15 +661,11 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    let result = [];
+    return arr.reduce((previous, current) => {
+        let child = childrenSelector(current);
 
-    arr.map(function (value) {
-        let child = childrenSelector(value);
-
-        result = result.concat(child);
-    });
-
-    return result;
+        return previous.concat(child);
+    }, []);
 }
 
 
@@ -761,12 +719,10 @@ function swapHeadAndTail(arr) {
         result = [];
 
     if (length % 2 == 0) {
-        result = result.concat(arr.slice(length / 2, length), arr.slice(0, length / 2))
+        return result.concat(arr.slice(length / 2, length), arr.slice(0, length / 2))
     } else {
-        result = result.concat(arr.slice(length / 2 + 1, length), arr[parseInt(length / 2, 10)], arr.slice(0, length / 2))
+        return result.concat(arr.slice(length / 2 + 1, length), arr[parseInt(length / 2, 10)], arr.slice(0, length / 2))
     }
-
-    return result;
 }
 
 
