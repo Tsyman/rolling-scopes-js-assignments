@@ -190,15 +190,14 @@ MySimpleSelector.prototype = {
     },
 
     stringifyItem: function (items, before, after) {
-        let result = "";
+        items = items || [];
 
         if (!Array.isArray(items) && items != null)
             items = [items];
 
-        for (let i in items)
-            result += before + items[i] + after;
-
-        return result;
+        return items.reduce((previous, current) => {
+            return previous + before + current + after;
+        }, "");
     },
 
     stringify: function () {
