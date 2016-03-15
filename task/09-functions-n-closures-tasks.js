@@ -71,13 +71,9 @@ function getPowerFunction(exponent) {
 function getPolynom() {
     var args = Array.from(arguments).reverse();
     return (x) => {
-        let result = 0;
-
-        for (let i = 0; i < args.length; i++) {
-            result += args[i] * Math.pow(x, i);
-        }
-
-        return result;
+        return args.reduce((previous, current, index) => {
+            return previous + current * Math.pow(x, index);
+        }, 0);
     };
 }
 
