@@ -68,9 +68,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    let subStr = value.substr(7);
-
-    return subStr.substring(0, subStr.length - 1);
+    return value.substr(0, value.length - 1).substr(7);
 }
 
 
@@ -85,7 +83,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    return value[0];
+    return value.charAt(0);
 }
 
 /**
@@ -106,9 +104,9 @@ function removeLeadingAndTrailingWhitespaces(value) {
 /**
  * Returns a string that repeated the specified number of times.
  *
- * @param {string} value
- * @param {string} count
- * @return {string}
+ * @param {String} value
+ * @param {Number} count
+ * @return {String}
  *
  * @example
  *   'A', 5  => 'AAAAA'
@@ -131,10 +129,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    let start = str.indexOf(value),
-        end = start + value.length;
-
-    return str.substr(0, start) + str.substr(end);
+    return str.replace(value, "");
 }
 
 /**
@@ -170,8 +165,8 @@ function convertToUpperCase(str) {
 /**
  * Extracts e-mails from single string with e-mails list delimeted by semicolons
  *
- * @param {string} str
- * @return {array}
+ * @param {String} str
+ * @return {Array}
  *
  * @example
  *   'angus.young@gmail.com;brian.johnson@hotmail.com;bon.scott@yahoo.com' => ['angus.young@gmail.com', 'brian.johnson@hotmail.com', 'bon.scott@yahoo.com']
@@ -204,10 +199,10 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  */
 function getRectangleString(width, height) {
-    let result = "┌" + ("─").repeat(width - 2) + "┐" + "\n";
+    let result = "";
 
+    result += "┌" + ("─").repeat(width - 2) + "┐" + "\n";
     result += ( "│" + (" ").repeat(width - 2) + "│" + "\n" ).repeat(height - 2);
-
     result += "└" + ("─").repeat(width - 2) + "┘" + "\n";
 
     return result;
