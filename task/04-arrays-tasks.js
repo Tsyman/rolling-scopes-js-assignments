@@ -556,7 +556,7 @@ function getIdentityMatrix(n) {
     let result = new Array(n);
     result.fill([]);
 
-    return result.map(function (item, index) {
+    return result.map((item, index) => {
         item = new Array(n);
         item.fill(0);
         item[index] = 1;
@@ -582,7 +582,7 @@ function getIntervalArray(start, end) {
     let result = new Array(end - start);
     result.fill(0);
 
-    return result.reduce(function (previous) {
+    return result.reduce((previous) => {
         previous.push(previous[previous.length - 1] + 1);
 
         return previous;
@@ -684,7 +684,7 @@ function selectMany(arr, childrenSelector) {
 function getElementByIndexes(arr, indexes) {
     let result = null;
 
-    indexes.map(function (item, index) {
+    indexes.map((item, index) => {
         if (index != indexes.length - 1) {
             arr = arr[item];
         } else {
