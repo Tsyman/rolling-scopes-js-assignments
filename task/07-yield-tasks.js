@@ -111,8 +111,9 @@ function* depthTraversalTree(root) {
         yield item;
 
         if (item.children) {
-            for (let i = item.children.length - 1; i >= 0; i--)
-                stack.push(item.children[i]);
+            item.children.reverse().forEach((child) => {
+                stack.push(child);
+            });
         }
     }
 }
@@ -148,8 +149,9 @@ function* breadthTraversalTree(root) {
         yield item;
 
         if (item.children) {
-            for (let i = 0; i < item.children.length; i++)
-                queue.push(item.children[i]);
+            item.children.forEach((child) => {
+                queue.push(child);
+            });
         }
     }
 }
