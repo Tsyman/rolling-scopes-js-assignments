@@ -150,72 +150,107 @@ function* wrapText(text, columns) {
  *   [ 'A♥','K♥','Q♥','2♦','3♠' ] =>  PokerRank.HighCard
  */
 const PokerRank = {
-    StraightFlush: 8,
-    FourOfKind: 7,
-    FullHouse: 6,
-    Flush: 5,
-    Straight: 4,
-    ThreeOfKind: 3,
-    TwoPairs: 2,
-    OnePair: 1,
-    HighCard: 0
+    StraightFlush: 8, // +
+    FourOfKind: 7,    // +
+    FullHouse: 6,     // +
+    Flush: 5,         // +
+    Straight: 4,      // +
+    ThreeOfKind: 3,   // +
+    TwoPairs: 2,      // +
+    OnePair: 1,       // +
+    HighCard: 0       // +
 };
 
+function compareCards(hand) {
+    let cardMap = new Map(), result = "";
+    hand.forEach((value) => {
+        let prev = cardMap.get(value.dig);
+
+        cardMap.set(value.dig, prev == undefined ? 1 : prev + 1);
+    });
+
+    cardMap.forEach((value) => {
+        if (value > 1)
+            result += value;
+    });
+
+    return result;
+}
+
+function isStraight(hand) {
+    let lowest = Math.min.apply(null, hand.map(value => value.dig));
+
+    return hand.reduce((previous, current, index) => {
+        return previous && (current.dig - lowest == index);
+    }, true);
+}
+
+function isAceStraight(hand) {
+    hand = hand.map((value) => value.dig == 14 ? 1 : value.dig).sort();
+    let lowest = Math.min.apply(null, hand);
+
+    return hand.reduce((previous, current, index) => {
+        return previous && (current - lowest == index);
+    }, true);
+}
+
+function isFlush(hand) {
+    hand = hand.map((value) => value.mask);
+
+    return (hand[0] == (hand[1] | hand[2] | hand[3] | hand[4]));
+}
+
 function getPokerHandRank(hand) {
-    hand = ['4♣', '4♦', '4♥', '4♠', '10♥'];
-    for (let i = 0; i < 5; i++) {
-        let sec = hand[i].length == 2 ? 1 : 2, dig = hand[i].substr(0, sec);
+    hand = hand.map((value) => {
+        let sec = value.length == 2 ? 1 : 2, dig = value.substr(0, sec),
+            masks = new Map([["♠", 1], ["♣", 2], ["♥", 4], ["♦", 8]]),
+            cards = new Map([["J", 11], ["Q", 12], ["K", 13], ["A", 14]]);
 
-        if (Number.isNaN(Number(dig))) {
-            if (dig == "J")
-                dig = 11;
-            if (dig == "Q")
-                dig = 12;
-            if (dig == "K")
-                dig = 13;
-            if (dig == "A")
-                dig = 14;
-        } else {
-            dig = Number(dig);
-        }
+        if (cards.has(dig))
+            dig = cards.get(dig);
 
-        hand[i] = {dig: dig, mask: hand[i].substr(sec)};
-    }
+        return {dig: Number(dig), mask: masks.get(value.substr(sec))};
+    });
     hand.sort((a, b) => {
         return a.dig > b.dig ? 1 : -1;
     });
 
-    // StraightFlush
-    let isStraightFlush = true;
-    for (let i = 1; i < 5; i++) {
-        if (i < 4 && hand[i].dig - hand[i - 1].dig != 1)
-            isStraightFlush = false;
+    let rank = 0;
 
-        if (hand[i].mask != hand[i - 1].mask)
-            isStraightFlush = false;
+    switch (compareCards(hand)) {
+        case "4":
+            rank = PokerRank.FourOfKind;
+            break;
+
+        case "23":
+        case "32":
+            rank = PokerRank.FullHouse;
+            break;
+
+        case "22":
+            rank = PokerRank.TwoPairs;
+            break;
+
+        case "3":
+            rank = PokerRank.ThreeOfKind;
+            break;
+
+        case "2":
+            rank = PokerRank.OnePair;
+            break;
+
+        default:
+            if (isStraight(hand) || isAceStraight(hand))
+                rank = PokerRank.Straight;
     }
 
-    if (isStraightFlush) {
-        if (hand[4].dig == 14) {
-            if (hand[4].dig - hand[3].dig != 1 && hand[0].dig != 2)
-                isStraightFlush = false;
-        }
-    }
+    if (isFlush(hand))
+        if (rank == 0)
+            rank = PokerRank.Flush;
+        else
+            rank = PokerRank.StraightFlush;
 
-    // FourOfKind
-    let isFourOfKind = false, firstDigs = true, lastDigs = true;
-    for (let i = 0; i < 5; i++) {
-        if (i < 3 && hand[i].dig != hand[i + 1].dig)
-            firstDigs = false;
-
-        if (i > 1 && hand[i].dig != hand[i - 1].dig)
-            lastDigs = false;
-    }
-    isFourOfKind = firstDigs || lastDigs;
-
-
-    console.log(hand, isStraightFlush, isFourOfKind);
-    throw new Error('Not implemented');
+    return rank;
 }
 
 
