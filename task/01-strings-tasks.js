@@ -213,8 +213,8 @@ function getRectangleString(width, height) {
  * Encode specified string with ROT13 cipher
  * See details:  https://en.wikipedia.org/wiki/ROT13
  *
- * @param {string} str
- * @return {string}
+ * @param {String} str
+ * @return {String}
  *
  * @example
  *
@@ -225,21 +225,13 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    let result = '';
+    return str.replace(/[a-zA-Z]/g, function (char) {
+        let c = char.charCodeAt(0) + 13;
+        if ((char <= "Z" ? 90 : 122) < c)
+            c -= 26;
 
-    for (let i in str) {
-        if (!str[i].match(/[A-Za-z]/)) {
-            result += str[i];
-            continue;
-        }
-
-        let s = str.charCodeAt(i),
-            to = (s <= 90 ? 90 : 122) >= (s = s + 13) ? s : s - 26;
-
-        result += String.fromCharCode(to);
-    }
-
-    return result;
+        return String.fromCharCode(c);
+    });
 }
 
 /**
