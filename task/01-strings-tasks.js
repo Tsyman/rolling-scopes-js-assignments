@@ -68,7 +68,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    return value.substr(0, value.length - 1).substr(7);
+    return value.substr(7, value.length - 8);
 }
 
 
@@ -129,7 +129,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    return str.replace(value, "");
+    return str.replace(value, '');
 }
 
 /**
@@ -199,11 +199,11 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  */
 function getRectangleString(width, height) {
-    let result = "";
+    let result = '';
 
-    result += "┌" + ("─").repeat(width - 2) + "┐" + "\n";
-    result += ( "│" + (" ").repeat(width - 2) + "│" + "\n" ).repeat(height - 2);
-    result += "└" + ("─").repeat(width - 2) + "┘" + "\n";
+    result += '┌' + ('─').repeat(width - 2) + '┐' + '\n';
+    result += ( '│' + (' ').repeat(width - 2) + '│' + '\n' ).repeat(height - 2);
+    result += '└' + ('─').repeat(width - 2) + '┘' + '\n';
 
     return result;
 }
@@ -225,7 +225,7 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    let result = "";
+    let result = '';
 
     for (let i in str) {
         if (!str[i].match(/[A-Za-z]/)) {
@@ -289,13 +289,13 @@ function getCardId(value) {
         result = 0;
 
     switch (value.charAt(value.length - 1)) {
-        case "♦":
+        case '♦':
             multiplier = 1;
             break;
-        case "♥":
+        case '♥':
             multiplier = 2;
             break;
-        case "♠":
+        case '♠':
             multiplier = 3;
             break;
     }
@@ -304,11 +304,11 @@ function getCardId(value) {
 
     if (!Number.isNaN(parseInt(value, 10))) {
         result += parseInt(value, 10) - 1;
-    } else if (value.charAt(0) == "J") {
+    } else if (value.charAt(0) == 'J') {
         result += 10;
-    } else if (value.charAt(0) == "Q") {
+    } else if (value.charAt(0) == 'Q') {
         result += 11;
-    } else if (value.charAt(0) == "K") {
+    } else if (value.charAt(0) == 'K') {
         result += 12;
     }
 
