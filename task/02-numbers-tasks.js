@@ -117,11 +117,7 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (1,2)     => 0
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
-    let result = (x1 * x2 + y1 * y2);
-
-    result /= ( Math.sqrt(x1 * x1 + y1 * y1) * Math.sqrt(x2 * 2 + y2 * y2) );
-
-    return Math.acos(result);
+    return Math.abs(Math.atan2(y1, x1) - Math.atan2(y2, x2));
 }
 
 /**
