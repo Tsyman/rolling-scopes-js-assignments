@@ -161,6 +161,7 @@ function UrlShortener() {
     "0123456789-_.~!*'();:@&=+$,/?#[]");
 }
 
+
 UrlShortener.prototype = {
     getByteMap: function (digit) {
         let tmp = "";
