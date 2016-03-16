@@ -85,7 +85,24 @@ function findStringInSnakingPuzzle(puzzle, searchStr) {
  *    'abc' => 'abc','acb','bac','bca','cab','cba'
  */
 function* getPermutations(chars) {
-    throw new Error('Not implemented');
+    let stack = [];
+    stack.push({string: "", visited: (new Array(chars.length)).fill(false)});
+    while (stack.length) {
+        let item = stack.pop();
+
+        if (item.string.length == chars.length) {
+            yield item.string;
+            continue;
+        }
+
+        for (let i = 0; i < chars.length; i++)
+            if (!item.visited[i]) {
+                let newArr = Array.from(item.visited);
+                newArr[i] = true;
+
+                stack.push({string: item.string + chars[i], visited: newArr});
+            }
+    }
 }
 
 
@@ -96,8 +113,8 @@ function* getPermutations(chars) {
  * Each day, you can either buy one unit of stock, sell any number of stock units you have already bought, or do nothing.
  * Therefore, the most profit is the maximum difference of all pairs in a sequence of stock prices.
  *
- * @param {array} quotes
- * @return {number} max profit
+ * @param {Array} quotes
+ * @return {Number} max profit
  *
  * @example
  *    [ 1, 2, 3, 4, 5, 6]   => 15  (buy at 1,2,3,4,5 and then sell all at 6)
@@ -105,7 +122,22 @@ function* getPermutations(chars) {
  *    [ 1, 6, 5, 10, 8, 7 ] => 18  (buy at 1,6,5 and sell all at 10)
  */
 function getMostProfitFromStockQuotes(quotes) {
-    throw new Error('Not implemented');
+    let maximums = quotes
+        .reduceRight((previous, current) => {
+            if (previous.length == 0)
+                return [current];
+
+            previous.push(Math.max(previous[previous.length - 1], current));
+
+            return previous;
+        }, [])
+        .reverse();
+
+    maximums.push(0);
+
+    return quotes.reduce((previous, current, index) => {
+        return previous + Math.max(0, maximums[index + 1] - current);
+    }, 0);
 }
 
 
@@ -124,22 +156,38 @@ function getMostProfitFromStockQuotes(quotes) {
  *
  */
 function UrlShortener() {
-    this.urlAllowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-        "abcdefghijklmnopqrstuvwxyz" +
-        "0123456789-_.~!*'();:@&=+$,/?#[]";
+    this.urlAllowedChars = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+    "abcdefghijklmnopqrstuvwxyz" +
+    "0123456789-_.~!*'();:@&=+$,/?#[]");
 }
 
 UrlShortener.prototype = {
+    getByteMap: function (digit) {
+        let tmp = "";
+        while (digit > 0) {
+            tmp += digit % 2;
+            digit = parseInt(digit / 2, 10);
+        }
+        return tmp;
+    },
 
     encode: function (url) {
-        throw new Error('Not implemented');
+        url = this.urlAllowedChars;
+        let encoded = new Buffer(url).toString('base64');
+        let decoded = new Buffer(encoded, 'base64').toString('ascii');
+        console.log(encoded);
+        console.log(decoded);
+        //throw new Error('Not implemented');
     },
 
     decode: function (code) {
         throw new Error('Not implemented');
     }
-}
+};
 
+let coder = new UrlShortener;
+
+console.log(coder.encode("abcde[]"));
 
 module.exports = {
     findStringInSnakingPuzzle: findStringInSnakingPuzzle,
