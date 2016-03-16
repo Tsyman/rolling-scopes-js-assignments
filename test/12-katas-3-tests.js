@@ -99,7 +99,7 @@ describe('12-katas-3-tasks', function() {
     });
 
 
-    /*it.optional('urlShortener should return encoded string shorter than original url', () => {
+    it.optional('urlShortener should return encoded string shorter than original url', () => {
         [
             'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul',
             'https://en.wikipedia.org/wiki/Percent-encoding#Types_of_URI_characters',
@@ -129,6 +129,6 @@ describe('12-katas-3-tasks', function() {
                 `urlShortener.encode for "${data}" returns "${encoded}" but decode returns "${actual}"`
             );
         });
-    });*/
+    });
 
 });

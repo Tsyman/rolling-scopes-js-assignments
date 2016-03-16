@@ -176,9 +176,9 @@ UrlShortener.prototype = {
         url = this.urlAllowedChars;
         let encoded = new Buffer(url).toString('base64');
         let decoded = new Buffer(encoded, 'base64').toString('ascii');
-        console.log(encoded);
-        console.log(decoded);
-        //throw new Error('Not implemented');
+        //console.log(encoded);
+        //console.log(decoded);
+        throw new Error('Not implemented');
     },
 
     decode: function (code) {
@@ -188,7 +188,7 @@ UrlShortener.prototype = {
 
 let coder = new UrlShortener;
 
-console.log(coder.encode("abcde[]"));
+//console.log(coder.encode("abcde[]"));
 
 module.exports = {
     findStringInSnakingPuzzle: findStringInSnakingPuzzle,
