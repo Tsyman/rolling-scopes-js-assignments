@@ -199,11 +199,11 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  */
 function getRectangleString(width, height) {
-    let result = '';
+    let result = '', topLine = '┌' + ('─').repeat(width - 2) + '┐' + '\n';
 
-    result += '┌' + ('─').repeat(width - 2) + '┐' + '\n';
+    result += topLine;
     result += ( '│' + (' ').repeat(width - 2) + '│' + '\n' ).repeat(height - 2);
-    result += '└' + ('─').repeat(width - 2) + '┘' + '\n';
+    result += topLine.replace("┌", "└").replace("┐", "┘");
 
     return result;
 }
@@ -277,34 +277,13 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    let multiplier = 0,
-        result = 0;
+    let cards = [
+        'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+        'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+        'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+        'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
 
-    switch (value.charAt(value.length - 1)) {
-        case '♦':
-            multiplier = 1;
-            break;
-        case '♥':
-            multiplier = 2;
-            break;
-        case '♠':
-            multiplier = 3;
-            break;
-    }
-
-    result += 13 * multiplier;
-
-    if (!Number.isNaN(parseInt(value, 10))) {
-        result += parseInt(value, 10) - 1;
-    } else if (value.charAt(0) == 'J') {
-        result += 10;
-    } else if (value.charAt(0) == 'Q') {
-        result += 11;
-    } else if (value.charAt(0) == 'K') {
-        result += 12;
-    }
-
-    return result;
+    return cards.indexOf(value);
 }
 
 
