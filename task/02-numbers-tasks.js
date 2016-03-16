@@ -170,7 +170,7 @@ function parseNumberFromString(value) {
  *   1,2,3   => 3.741657386773941
  */
 function getParallelipidedDiagonal(a, b, c) {
-    return Math.hypot(Math.hypot(a, b), c) ;
+    return Math.hypot(Math.hypot(a, b), c);
 }
 
 /**
@@ -191,7 +191,9 @@ function getParallelipidedDiagonal(a, b, c) {
  *   1678, 3  => 2000
  */
 function roundToPowerOfTen(num, pow) {
-    return Math.round(num / Math.pow(10, pow)) * Math.pow(10, pow);
+    let power = Math.pow(10, pow);
+
+    return Math.round(num / power) * power;
 }
 
 /**
