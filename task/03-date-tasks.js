@@ -80,22 +80,7 @@ function isLeapYear(date) {
 function timeSpanToString(startDate, endDate) {
     let diff = endDate - startDate;
 
-    function addZeros(n, length) {
-        n = String(n);
-
-        return ("0").repeat(length - n.length) + n;
-    }
-
-    let ms = diff % 1000;
-    diff = (diff - ms) / 1000;
-
-    let seconds = diff % 60;
-    diff = (diff - seconds) / 60;
-
-    let minutes = diff % 60;
-    let hrs = (diff - minutes) / 60;
-
-    return addZeros(hrs, 2) + ':' + addZeros(minutes, 2) + ':' + addZeros(seconds, 2) + '.' + addZeros(ms, 3);
+    return new Date(diff).toISOString().slice(11, 23);
 }
 
 
