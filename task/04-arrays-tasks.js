@@ -204,14 +204,11 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-    return arr.reduce((previous, current, index) => {
-        previous += current.toString();
-
-        if (index != arr.length - 1)
-            previous += "\n";
-
-        return previous;
+    arr = arr.map(value => {
+        return value.join(",");
     }, "");
+
+    return arr.join("\n");
 }
 
 /**
