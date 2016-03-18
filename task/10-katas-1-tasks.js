@@ -85,7 +85,10 @@ function createCompassPoints() {
  *   'nothing to do' => 'nothing to do'
  */
 function* expandBraces(str) {
-    let queue = [], regex = new RegExp("\{([0-9a-zA-Z\.,]+)\}", 'i'), itemSet = new Set;
+    const queue = [],
+        regex = new RegExp("\{([0-9a-zA-Z\.,]+)\}", 'i'),
+        itemSet = new Set;
+
     queue.push(str);
 
     while (queue.length) {
@@ -179,15 +182,10 @@ function getZigZagMatrix(n) {
         }
     }
 
-    let result = new Array(n), gen = nextStepGenerator(n);
-    result.fill(null);
-    result.forEach((item, index) => {
-        let arr = new Array(n);
-        arr.fill(0);
+    let result = Array.from({length: n}, () => null),
+        gen = nextStepGenerator(n);
 
-        result[index] = arr;
-    });
-
+    result = result.map(() => Array.from({length: n}, () => 0));
 
     for (let i = 0; i < n * n; i++) {
         let stage = gen.next().value;
@@ -228,17 +226,18 @@ function canDominoesMakeRow(dominoes) {
 
         visited[current] = true;
 
-        for (let i = 0; i < dominoes.length; i++) if (!visited[i]) {
-            if (dominoes[i].indexOf(value) != -1) {
-                dfs(i, dominoes[i][0] == value ? dominoes[i][1] : dominoes[i][0], left - 1);
+        for (let i = 0; i < dominoes.length; i++)
+            if (!visited[i]) {
+                if (dominoes[i].indexOf(value) != -1) {
+                    dfs(i, dominoes[i][0] == value ? dominoes[i][1] : dominoes[i][0], left - 1);
+                }
             }
-        }
 
         visited[current] = false;
     }
 
-    let result = false, visited = new Array(dominoes.length);
-    visited.fill(false);
+    let result = false,
+        visited = Array.from({length: dominoes.length}, () => false);
 
     for (let i = 0; i < dominoes.length; i++) {
         dfs(i, dominoes[i][0], dominoes.length - 1);
@@ -287,7 +286,7 @@ function extractRanges(nums) {
         }
     };
     let from = 0;
-    nums.sort((a, b)=> a > b ? 1 : -1);
+    nums.sort((a, b)=> a - b);
 
     if (nums.length == 1)
         return nums[0];
