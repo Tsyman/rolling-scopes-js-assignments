@@ -199,7 +199,8 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  */
 function getRectangleString(width, height) {
-    let result = '', topLine = '┌' + ('─').repeat(width - 2) + '┐' + '\n';
+    let result = '',
+        topLine = '┌' + ('─').repeat(width - 2) + '┐' + '\n';
 
     result += topLine;
     result += ( '│' + (' ').repeat(width - 2) + '│' + '\n' ).repeat(height - 2);
