@@ -446,8 +446,10 @@ function toStringList(arr) {
  */
 function sortCitiesArray(arr) {
     return arr.sort((a, b) => {
-        if (a.country.localeCompare(b.country) != 0)
-            return a.country.localeCompare(b.country);
+        let compareCountry = a.country.localeCompare(b.country);
+
+        if (compareCountry != 0)
+            return compareCountry;
         else
             return a.city.localeCompare(b.city);
 
