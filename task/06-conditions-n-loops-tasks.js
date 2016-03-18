@@ -178,7 +178,7 @@ function doRectanglesOverlap(rect1, rect2) {
  *
  */
 function isInsideCircle(circle, point) {
-    let radius = Math.sqrt(Math.pow(circle.center.x - point.x, 2) + Math.pow(circle.center.y - point.y, 2));
+    let radius = Math.hypot((circle.center.x - point.x), (circle.center.y - point.y));
 
     return radius < circle.radius;
 }
