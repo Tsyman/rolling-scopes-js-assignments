@@ -54,19 +54,13 @@ function getCicleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-    if (value1 > value2) {
-        let tmp = value1;
-        value1 = value2;
-        value2 = tmp;
-    }
-
     return value1 + Math.ceil((value2 - value1) * 0.5);
 }
 
 /**
  * Returns a distance beetween two points by cartesian coordinates.
  *
- * @param {number} x1
+ * @param {number} x1S
  * @param {number} y1
  * @param {number} x2
  * @param {number} y2
