@@ -38,11 +38,7 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-    let def = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31];
-
-    def.splice(len);
-
-    return def;
+    return Array.from({length: len}, (v, k) => k * 2 + 1);
 }
 
 
