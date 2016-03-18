@@ -44,28 +44,29 @@ function findStringInSnakingPuzzle(puzzle, searchStr) {
 
             if (data[newY][newX] == search[step]) {
                 result = result || dfs({x: newX, y: newY}, step + 1);
-
             }
         }
+
         data[current.y][current.x] = save;
         return result;
     }
 
     let data = Array.from(puzzle);
-    let arr = new Array(data[0].length + 2);
-    arr.fill('');
+    let arr = Array.from({length: data[0].length + 2}, () => '');
 
-    data.forEach((item, index) => {
-        data[index] = [''].concat(item.split(''), ['']);
-    });
+    data = data.map(item => [''].concat(item.split(''), ['']));
     data = [arr].concat(data, [arr]);
-    let search = searchStr.split(''), n = data[0].length - 1, m = data.length - 1;
+
+    let search = searchStr.split(''),
+        n = data[0].length - 1,
+        m = data.length - 1;
 
     for (let i = 1; i < m; i++) {
-        for (let j = 1; j < n; j++) if (data[i][j] == search[0]) {
-            if (dfs({y: i, x: j}, 1))
-                return true;
-        }
+        for (let j = 1; j < n; j++)
+            if (data[i][j] == search[0]) {
+                if (dfs({y: i, x: j}, 1))
+                    return true;
+            }
     }
 
     return false;
@@ -86,7 +87,8 @@ function findStringInSnakingPuzzle(puzzle, searchStr) {
  */
 function* getPermutations(chars) {
     let stack = [];
-    stack.push({string: "", visited: (new Array(chars.length)).fill(false)});
+    stack.push({string: "", visited: Array.from({length: chars.length}, () => false)});
+
     while (stack.length) {
         let item = stack.pop();
 
