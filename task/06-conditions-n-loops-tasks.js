@@ -119,9 +119,9 @@ function isTriangle(a, b, c) {
  *     -------------
  *     |           |
  *     |           |  height = 10
- *     ------------- 
- *        width=20    
- * 
+ *     -------------
+ *        width=20
+ *
  * NOTE: Please use canvas coordinate space (https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#The_grid),
  * it differs from Cartesian coordinate system.
  *
@@ -144,7 +144,8 @@ function doRectanglesOverlap(rect1, rect2) {
         rect2 = tmp;
     }
 
-    return !!((rect1.top <= rect2.top && rect1.top + rect1.width >= rect2.top) && (rect1.left <= rect2.left && rect1.left + rect1.height >= rect2.left));
+    return !!((rect1.top <= rect2.top && rect1.top + rect1.width >= rect2.top)
+           && (rect1.left <= rect2.left && rect1.left + rect1.height >= rect2.left));
 }
 
 
