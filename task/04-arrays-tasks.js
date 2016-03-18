@@ -321,9 +321,7 @@ function get3TopItems(arr) {
  *   [ null, 1, 'elephant' ] => 1
  */
 function getPositivesCount(arr) {
-    return arr.reduce((previous, current) => {
-        return current > 0 ? previous + 1 : previous;
-    }, 0);
+    return arr.reduce((previous, current) => current > 0 ? previous + 1 : previous, 0);
 }
 
 /**
@@ -357,7 +355,7 @@ function sortDigitNamesByNumericOrder(arr) {
         a = items[a];
         b = items[b];
 
-        return a > b ? 1 : -1;
+        return a - b;
     });
 }
 
@@ -374,9 +372,7 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-    return arr.reduce((previous, current) => {
-        return previous + current;
-    }, 0);
+    return arr.reduce((previous, current) => previous + current, 0);
 }
 
 /**
@@ -392,9 +388,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-    return arr.reduce((previous, current) => {
-        return previous + !(current);
-    }, 0);
+    return arr.reduce((previous, current) => previous + !(current), 0);
 }
 
 /**
@@ -412,15 +406,13 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurences(arr, item) {
-    return arr.reduce((previous, current) => {
-        return previous + (current === item ? 1 : 0);
-    }, 0);
+    return arr.reduce((previous, current) => previous + (current === item ? 1 : 0), 0);
 }
 
 /**
  * Concatenates all elements from specified array into single string with ',' delimeter
  *
- * @param {array} arr
+ * @param {Array} arr
  * @return {string}
  *
  * @example
@@ -429,7 +421,7 @@ function findAllOccurences(arr, item) {
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
 function toStringList(arr) {
-    return arr.toString();
+    return arr.join(",");
 }
 
 
@@ -599,11 +591,7 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    return arr.reduce((previous, current) => {
-        let child = childrenSelector(current);
-
-        return previous.concat(child);
-    }, []);
+    return arr.reduce((previous, current) => previous.concat(childrenSelector(current)), []);
 }
 
 
