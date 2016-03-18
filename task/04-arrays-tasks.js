@@ -582,7 +582,7 @@ function selectMany(arr, childrenSelector) {
  *
  * @param {Array} arr
  * @param {Array} indexes
- * @return {any} element from array
+ * @return {Array} element from array
  *
  * @example
  *   [[1, 2], [3, 4], [5, 6]], [0,0]  => 1        (arr[0][0])
@@ -590,17 +590,14 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    let result = null;
+    return indexes.reduce((previous, current, index) => {
+        if (index != indexes.length - 1)
+            arr = arr[current];
+        else
+            return arr[current];
 
-    indexes.map((item, index) => {
-        if (index != indexes.length - 1) {
-            arr = arr[item];
-        } else {
-            result = arr[item];
-        }
-    });
-
-    return result;
+        return null;
+    }, null);
 }
 
 
