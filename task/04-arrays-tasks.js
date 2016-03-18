@@ -200,11 +200,9 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-    arr = arr.map(value => {
-        return value.join(",");
-    }, "");
-
-    return arr.join("\n");
+    return arr
+        .map(value => value.join(","), "")
+        .join("\n");
 }
 
 /**
@@ -240,9 +238,7 @@ function toArrayOfSquares(arr) {
 function getMovingSum(arr) {
     var prevSum = 0;
 
-    return arr.map(value => {
-        return prevSum = value + prevSum;
-    });
+    return arr.map(value => prevSum = value + prevSum);
 }
 
 /**
@@ -257,9 +253,7 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-    return arr.filter((value, index) => {
-        return !(index % 2 == 0);
-    });
+    return arr.filter((value, index) => !(index % 2 == 0));
 }
 
 
@@ -448,7 +442,6 @@ function sortCitiesArray(arr) {
             return compareCountry;
         else
             return a.city.localeCompare(b.city);
-
     });
 }
 
@@ -473,9 +466,7 @@ function sortCitiesArray(arr) {
 function getIdentityMatrix(n) {
     const result = Array.from({length: n}, () => []);
 
-    return result.map((item, index) => {
-        return Array.from({length: n}, (v, k) => k == index ? 1 : 0);
-    });
+    return result.map((item, index) => Array.from({length: n}, (v, k) => k == index ? 1 : 0));
 }
 
 /**
