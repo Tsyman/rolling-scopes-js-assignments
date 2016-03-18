@@ -179,7 +179,7 @@ function getHead(arr, n) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'b', 'c', 'd' ]
  */
 function getTail(arr, n) {
-    return arr.reverse().slice(0, n).reverse();
+    return arr.slice(-n);
 }
 
 
@@ -247,7 +247,7 @@ function toArrayOfSquares(arr) {
 function getMovingSum(arr) {
     var prevSum = 0;
 
-    return arr.map(value =>  {
+    return arr.map(value => {
         let newValue = value + prevSum;
         prevSum = newValue;
 
