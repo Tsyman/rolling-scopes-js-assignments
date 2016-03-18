@@ -232,7 +232,7 @@ function encodeToRot13(str) {
 
         let charCode = char.charCodeAt(0) + 13;
 
-        if ((char <= "Z" ? lowercaseBorder : uppercaseBorder) < charCode)
+        if ((char <= "Z" ? uppercaseBorder : lowercaseBorder) < charCode)
             charCode -= lettersCount;
 
         return String.fromCharCode(charCode);
