@@ -620,14 +620,20 @@ function getElementByIndexes(arr, indexes) {
  *
  */
 function swapHeadAndTail(arr) {
-    let length = arr.length,
-        result = [];
+    const length = arr.length;
+    const isOdd = length % 2 == 1;
+    const middle = parseInt(length / 2, 10) + (isOdd ? 0 : -1);
 
-    if (length % 2 == 0) {
-        return result.concat(arr.slice(length / 2, length), arr.slice(0, length / 2))
-    } else {
-        return result.concat(arr.slice(length / 2 + 1, length), arr[parseInt(length / 2, 10)], arr.slice(0, length / 2))
-    }
+    return arr.map((value, index) => {
+        let diff = middle - index;
+
+        if (diff > 0 || (diff == 0 && !isOdd))
+            return arr[middle + index + 1];
+        else if (diff < 0)
+            return arr[index - middle - 1];
+        else
+            return value;
+    });
 }
 
 
