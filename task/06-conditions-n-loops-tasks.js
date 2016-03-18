@@ -546,11 +546,10 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    let result = new Array(m1.length);
-    result.fill([]);
+    let result = Array.from({length: m1.length}, () => []);
 
-    result.forEach((item, index) => {
-        result[index] = new Array(m2[0].length);
+    result = result.map(() => {
+        return Array.from({length: m2[0].length}, () => 0);
     });
 
     for (let i = 0; i < m1.length; i++) {
