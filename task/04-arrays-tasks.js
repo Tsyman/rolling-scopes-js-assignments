@@ -338,25 +338,20 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-    return arr.sort((a, b) => {
-        let items = {
-            zero: 0,
-            one: 1,
-            two: 2,
-            three: 3,
-            four: 4,
-            five: 5,
-            six: 6,
-            seven: 7,
-            eight: 8,
-            nine: 9
-        };
+    const items = {
+        zero: 0,
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        five: 5,
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9
+    };
 
-        a = items[a];
-        b = items[b];
-
-        return a - b;
-    });
+    return arr.sort((a, b) => items[a] - items[b]);
 }
 
 /**
@@ -451,16 +446,11 @@ function toStringList(arr) {
  */
 function sortCitiesArray(arr) {
     return arr.sort((a, b) => {
-        if (a.country > b.country)
-            return 1;
-        else if (a.country < b.country)
-            return -1;
-        else if (a.city > b.city)
-            return 1;
-        else if (a.city < b.city)
-            return -1;
+        if (a.country.localeCompare(b.country) != 0)
+            return a.country.localeCompare(b.country);
         else
-            return 0;
+            return a.city.localeCompare(b.city);
+
     });
 }
 
