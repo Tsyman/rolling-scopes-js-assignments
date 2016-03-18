@@ -61,8 +61,8 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    json = JSON.parse(json);
     let obj = {};
+    json = JSON.parse(json);
 
     for (let i in json) {
         obj[i] = json[i];
@@ -133,12 +133,12 @@ function MySimpleSelector() {
     };
 
     this.currentStage = 0;
-    this.unChangeableFildes = [1, 2, 6];
+    this.unChangeableFieldes = [1, 2, 6];
 }
 
 MySimpleSelector.prototype = {
     checkSequence: function (index) {
-        if (this.unChangeableFildes.indexOf(index) != -1 && this.currentStage == index)
+        if (this.unChangeableFieldes.indexOf(index) != -1 && this.currentStage == index)
             throw new Error("Cannot set more then one value");
 
         if (index < this.currentStage)
@@ -195,20 +195,18 @@ MySimpleSelector.prototype = {
         if (!Array.isArray(items) && items != null)
             items = [items];
 
-        return items.reduce((previous, current) => {
-            return previous + before + current + after;
-        }, "");
+        return items.reduce((previous, current) => previous + before + current + after, "");
     },
 
     stringify: function () {
         let d = this.data;
 
         return this.stringifyItem(d.element, "", "") +
-          this.stringifyItem(d.id, "#", "") +
-          this.stringifyItem(d.class, ".", "") +
-          this.stringifyItem(d.attr, "[", "]") +
-          this.stringifyItem(d.pseudoClass, ":", "") +
-          this.stringifyItem(d.pseudoElement, "::", "");
+            this.stringifyItem(d.id, "#", "") +
+            this.stringifyItem(d.class, ".", "") +
+            this.stringifyItem(d.attr, "[", "]") +
+            this.stringifyItem(d.pseudoClass, ":", "") +
+            this.stringifyItem(d.pseudoElement, "::", "");
     }
 };
 
