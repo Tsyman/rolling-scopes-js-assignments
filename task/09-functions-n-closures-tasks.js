@@ -26,9 +26,7 @@
  *
  */
 function getComposition(f, g) {
-    return (x) => {
-        return f(g(x));
-    }
+    return (x) => f(g(x))
 }
 
 
@@ -49,9 +47,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-    return (x) => {
-        return Math.pow(x, exponent);
-    }
+    return (x) => Math.pow(x, exponent)
 }
 
 
@@ -70,10 +66,9 @@ function getPowerFunction(exponent) {
  */
 function getPolynom() {
     var args = Array.from(arguments).reverse();
+
     return (x) => {
-        return args.reduce((previous, current, index) => {
-            return previous + current * Math.pow(x, index);
-        }, 0);
+        return args.reduce((previous, current, index) => previous + current * Math.pow(x, index), 0);
     };
 }
 
@@ -213,9 +208,7 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    return () => {
-        return startFrom++;
-    };
+    return () => startFrom++;
 }
 
 
