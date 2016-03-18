@@ -245,10 +245,7 @@ function getMovingSum(arr) {
     var prevSum = 0;
 
     return arr.map(value => {
-        let newValue = value + prevSum;
-        prevSum = newValue;
-
-        return newValue;
+        return prevSum = value + prevSum;
     });
 }
 
