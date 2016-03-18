@@ -283,10 +283,7 @@ function getSecondItems(arr) {
  */
 function propagateItemsByPositionIndex(arr) {
     return arr.reduce((previous, current, index) => {
-        let items = new Array(index + 1);
-        items.fill(current);
-
-        return previous.concat(items);
+        return previous.concat((new Array(index + 1)).fill(current));
     }, []);
 }
 
