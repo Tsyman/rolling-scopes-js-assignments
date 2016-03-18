@@ -303,9 +303,7 @@ function propagateItemsByPositionIndex(arr) {
  */
 function get3TopItems(arr) {
     return arr
-        .sort((a, b) => {
-            return a > b ? -1 : 1;
-        })
+        .sort((a, b) => b - a)
         .slice(0, 3);
 }
 
