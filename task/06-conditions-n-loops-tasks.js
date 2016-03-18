@@ -396,7 +396,6 @@ function isBracketsBalanced(str) {
         }
     }
 
-
     return stack.length == 0;
 }
 
@@ -444,9 +443,9 @@ function timespanToHumanString(startDate, endDate) {
     };
     let diff = endDate - startDate;
 
-    if (diff <= 45000)
+    if (diff <= 45 * 1000)
         return "a few seconds ago";
-    if (diff <= 90000)
+    if (diff <= 90 * 1000)
         return "a minute ago";
     if (diff <= 45 * 60 * 1000)
         return `${round(diff / (60 * 1000))} minutes ago`;
@@ -506,28 +505,25 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    let size = 0,
-        result = "";
+    let current = 0, breakPoint = 0;
 
-    pathes.forEach((item, index) => {
-        item = item.split('/');
-        pathes[index] = item;
+    while (true) {
+        let isSame = true;
 
-        size = index == 0 ? item.length : Math.min(size, item.length);
-    });
+        for (let i = 0; i < pathes.length; i++)
+            if (pathes[0][current] != pathes[i][current])
+                isSame = false;
 
-    for (let i = 0; i < size; i++) {
-        let setObj = new Set;
+        if (isSame) {
+            if (pathes[0][current] == "/")
+                breakPoint = current + 1;
 
-        for (let j = 0; j < pathes.length; j++)
-            setObj.add(pathes[j][i]);
-
-        if (setObj.size == 1)
-            result += pathes[0][i] + "/";
-
+            current++;
+        } else
+            break;
     }
 
-    return result;
+    return pathes[0].slice(0, breakPoint);
 }
 
 
