@@ -32,10 +32,10 @@
 function getFizzBuzz(num) {
     let result = "";
 
-    if (num % 3 == 0)
+    if (num % 3 === 0)
         result += "Fizz";
 
-    if (num % 5 == 0)
+    if (num % 5 === 0)
         result += "Buzz";
 
     if (result === "")
@@ -375,25 +375,22 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    let stack = [];
+    const stack = [];
+    const openBrackets = ['[', '{', '(', '<'];
+    const closeBrackets = [']', '}', ')', '>'];
 
     for (let i = 0; i < str.length; i++) {
-        let c = str[i];
+        const currentBracket = str[i];
 
-        if (['[', '{', '(', '<'].indexOf(c) != -1) {
-            stack.push(c);
+        if (openBrackets.indexOf(currentBracket) != -1) {
+            stack.push(currentBracket);
             continue;
         }
 
-        let s = stack.pop();
+        const topBracket = stack.pop();
 
-        if (( s == '[' && c == ']') ||
-            ( s == '(' && c == ')') ||
-            ( s == '{' && c == '}') ||
-            ( s == '<' && c == '>')) {
-        } else {
+        if (openBrackets.indexOf(topBracket) != closeBrackets.indexOf(currentBracket))
             return false;
-        }
     }
 
     return stack.length == 0;
@@ -488,7 +485,7 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    return parseInt(num, 10).toString(n);
+    return num.toString(n);
 }
 
 
@@ -597,7 +594,7 @@ function getMatrixProduct(m1, m2) {
  */
 function evaluateTicTacToePosition(position) {
     for (let i = 0; i < 3; i++) {
-        var winX = true, winY = true;
+        let winX = true, winY = true;
 
         for (let j = 0; j < 3; j++) {
             if (position[j][i] != position[0][i])
