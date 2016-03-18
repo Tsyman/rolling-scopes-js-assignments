@@ -282,10 +282,7 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    let values = "A234567891JQK",
-        masks = "♣♦♥♠";
-
-    return values.indexOf(value[0]) + (13 * masks.indexOf(value[value.length - 1]));
+    return "A234567891JQK".indexOf(value[0]) + (13 * "♣♦♥♠".indexOf(value[value.length - 1]));
 }
 
 
