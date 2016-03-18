@@ -120,9 +120,7 @@ function removeFalsyValues(arr) {
  *    [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]  => [ 'A', 'B', 'C', 'D', 'E', 'F', 'G' ]
  */
 function getUpperCaseStrings(arr) {
-    return arr.map(function (value) {
-        return value.toUpperCase();
-    });
+    return arr.map(x => x.toUpperCase());
 }
 
 
@@ -137,9 +135,7 @@ function getUpperCaseStrings(arr) {
  *    [ 'angular', 'react', 'ember' ] => [ 7, 5, 5 ]
  */
 function getStringsLength(arr) {
-    return arr.map(function (value) {
-        return value.length;
-    });
+    return arr.map(value => value.length);
 }
 
 /**
@@ -230,9 +226,7 @@ function toCsvText(arr) {
  *   [ 10, 100, -1 ]      => [ 100, 10000, 1 ]
  */
 function toArrayOfSquares(arr) {
-    return arr.map(function (value) {
-        return Math.pow(value, 2);
-    });
+    return arr.map(value => Math.pow(value, 2));
 }
 
 
@@ -252,7 +246,8 @@ function toArrayOfSquares(arr) {
  */
 function getMovingSum(arr) {
     var prevSum = 0;
-    return arr.map(function (value) {
+
+    return arr.map(value =>  {
         let newValue = value + prevSum;
         prevSum = newValue;
 
@@ -408,30 +403,8 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-    function isFalsy(value) {
-        if (value == false)
-            return true;
-
-        if (value == null)
-            return true;
-
-        if (Number.isNaN(value))
-            return true;
-
-        if (value == 0)
-            return true;
-
-        if (value === "")
-            return true;
-
-        if (value == undefined)
-            return true;
-
-        return false;
-    }
-
     return arr.reduce((previous, current) => {
-        return previous + isFalsy(current);
+        return previous + !(current);
     }, 0);
 }
 
