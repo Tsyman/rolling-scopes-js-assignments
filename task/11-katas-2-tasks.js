@@ -201,19 +201,18 @@ function isFlush(hand) {
 }
 
 function getPokerHandRank(hand) {
-    hand = hand.map((value) => {
-        let sec = value.length == 2 ? 1 : 2, dig = value.substr(0, sec),
-            masks = new Map([["♠", 1], ["♣", 2], ["♥", 4], ["♦", 8]]),
-            cards = new Map([["J", 11], ["Q", 12], ["K", 13], ["A", 14]]);
+    hand = hand
+        .map((value) => {
+            let sec = value.length == 2 ? 1 : 2, dig = value.substr(0, sec),
+                masks = new Map([["♠", 1], ["♣", 2], ["♥", 4], ["♦", 8]]),
+                cards = new Map([["J", 11], ["Q", 12], ["K", 13], ["A", 14]]);
 
-        if (cards.has(dig))
-            dig = cards.get(dig);
+            if (cards.has(dig))
+                dig = cards.get(dig);
 
-        return {dig: Number(dig), mask: masks.get(value.substr(sec))};
-    });
-    hand.sort((a, b) => {
-        return a.dig > b.dig ? 1 : -1;
-    });
+            return {dig: Number(dig), mask: masks.get(value.substr(sec))};
+        })
+        .sort((a, b) => a.dig - b.dig);
 
     let rank = 0;
 
