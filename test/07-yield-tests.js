@@ -396,13 +396,18 @@ describe('07-yield-tasks', function() {
 
 
     it.optional('mergeSortedSequences should merge two sorted sequences into one sorted sequence', () => {
-        var odds = function* () {
-               for(var i=1; true; i+=2) yield i;
-            };
-        var evens = function* () {
-               for(var i=2; true; i+=2) yield i;
-            };
-        var expected = 1;
+        function* Odds() {
+            let i = -1; while(1) yield i += 2;
+        }
+        function* Evens() {
+            let i = 0; while(1) yield i += 2;
+        }
+        function* Zero() { yield 0; }
+        function* Minus1() { yield -1; }
+
+        let odds = Odds();
+        let evens = Evens();
+        let expected = 1;
         for(let value of tasks.mergeSortedSequences(odds, evens)) {
             assert.equal(
                 value,
@@ -411,7 +416,8 @@ describe('07-yield-tasks', function() {
             if (expected>1000) break;
         }
 
-        var zero = function* () { yield 0; }
+        evens = Evens();
+        var zero = Zero();
         expected = 0;
         for(let value of tasks.mergeSortedSequences(zero, evens)) {
             assert.equal(
@@ -421,13 +427,14 @@ describe('07-yield-tasks', function() {
             expected +=2;
             if (expected>500) break;
         }
-
-        var minus1 = function* () { yield -1; }
+        odds = Odds();
+        var minus1 = Minus1();
         expected = -1;
         for(let value of tasks.mergeSortedSequences(odds, minus1)) {
             assert.equal(
                 value,
-                expected
+                expected,
+                "3"
             );
             expected +=2;
             if (expected>500) break;

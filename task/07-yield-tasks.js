@@ -61,12 +61,14 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    var fn1 = 1;
-    var fn2 = 0;
+    let fn1 = 1;
+    let fn2 = 0;
+
     while (true) {
-        var current = fn2;
+        let current = fn2;
         fn2 = fn1;
         fn1 = fn1 + current;
+
         yield current;
     }
 }
@@ -103,11 +105,11 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    let stack = [];
+    const stack = [];
     stack.push(root);
 
     while (stack.length) {
-        let item = stack.pop();
+        const item = stack.pop();
         yield item;
 
         if (item.children) {
@@ -141,11 +143,11 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    let queue = [];
+    const queue = [];
     queue.push(root);
 
     while (queue.length) {
-        let item = queue.shift();
+        const item = queue.shift();
         yield item;
 
         if (item.children) {
@@ -171,26 +173,17 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    let i = 0, j = 0;
+    while (true) {
+        let a = source1.next().value;
+        let b = source2.next().value;
 
-    while(i < source1.length || j < source2.length) {
-        let a = i < source1.length ? source1[i] : null,
-            b = j < source2.length ? source2[j] : null;
-
-        if(a == null){
-            j++;
+        if (a == undefined)
             yield b;
-        } else if(b == null) {
-            i++;
+        else if (b == undefined)
             yield a;
-        } else {
-            if(a < b)  {
-                i++;
-                yield a;
-            } else {
-                j++;
-                yield b;
-            }
+        else {
+            yield Math.min(a, b);
+            yield Math.max(a, b);
         }
     }
 }
