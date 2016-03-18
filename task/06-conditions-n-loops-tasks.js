@@ -596,8 +596,6 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    let result = [];
-
     for (let i = 0; i < 3; i++) {
         var winX = true, winY = true;
 
@@ -609,21 +607,26 @@ function evaluateTicTacToePosition(position) {
                 winY = false;
         }
 
-        if (winX && position[0][i] != undefined)
-            result.push(position[0][i]);
+        if (winX &&
+            position[0][i] != undefined)
+            return position[0][i];
 
         if (winY && position[i][0] != undefined)
-            result.push(position[i][0]);
+            return position[i][0];
     }
 
-    if (position[0][0] == position[1][1] && position[0][0] == position[2][2] && position[1][1] != undefined)
-        result.push(position[1][1]);
+    if (position[0][0] == position[1][1] &&
+        position[0][0] == position[2][2] &&
+        position[1][1] != undefined)
+        return position[1][1];
 
-    if (position[0][2] == position[1][1] && position[0][2] == position[2][0] && position[1][1] != undefined)
-        result.push(position[1][1]);
+    if (position[0][2] == position[1][1] &&
+        position[0][2] == position[2][0] &&
+        position[1][1] != undefined)
+        return position[1][1];
 
 
-    return result.length != 1 ? undefined : result[0];
+    return undefined;
 }
 
 
