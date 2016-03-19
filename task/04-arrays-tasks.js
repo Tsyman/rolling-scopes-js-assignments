@@ -309,7 +309,7 @@ function get3TopItems(arr) {
  *   [ null, 1, 'elephant' ] => 1
  */
 function getPositivesCount(arr) {
-    return arr.reduce((previous, current) => current > 0 ? previous + 1 : previous, 0);
+    return arr.reduce((prev, curr) => curr > 0 ? prev + 1 : prev, 0);
 }
 
 /**
@@ -355,7 +355,7 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-    return arr.reduce((previous, current) => previous + current, 0);
+    return arr.reduce((prev, curr) => prev + curr, 0);
 }
 
 /**
@@ -371,7 +371,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-    return arr.reduce((previous, current) => previous + !(current), 0);
+    return arr.reduce((prev, curr) => prev + !(curr), 0);
 }
 
 /**
@@ -389,7 +389,7 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurences(arr, item) {
-    return arr.reduce((previous, current) => previous + (current === item ? 1 : 0), 0);
+    return arr.reduce((prev, curr) => prev + (curr === item ? 1 : 0), 0);
 }
 
 /**
@@ -558,7 +558,7 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    return arr.reduce((previous, current) => previous.concat(childrenSelector(current)), []);
+    return arr.reduce((prev, curr) => prev.concat(childrenSelector(curr)), []);
 }
 
 
@@ -575,11 +575,11 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    return indexes.reduce((previous, current, index) => {
+    return indexes.reduce((prev, curr, index) => {
         if (index != indexes.length - 1)
-            arr = arr[current];
+            arr = arr[curr];
         else
-            return arr[current];
+            return arr[curr];
 
         return null;
     }, null);
