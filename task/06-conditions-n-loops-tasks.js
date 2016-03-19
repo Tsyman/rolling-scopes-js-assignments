@@ -294,7 +294,7 @@ function reverseInteger(num) {
  *
  * See algorithm here : https://en.wikipedia.org/wiki/Luhn_algorithm
  *
- * @param {String} ccn
+ * @param {Number} ccn
  * @return {boolean}
  *
  * @example:
@@ -310,7 +310,7 @@ function reverseInteger(num) {
  *
  */
 function isCreditCardNumber(ccn) {
-    let digits = String(ccn).split(''),
+    let digits = String(ccn),
         sum = 0,
         even = false;
 
