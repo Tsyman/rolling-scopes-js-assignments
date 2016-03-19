@@ -433,30 +433,37 @@ function timespanToHumanString(startDate, endDate) {
 
         return dig;
     };
-    let diff = endDate - startDate;
 
-    if (diff <= 45 * 1000)
+    const diff = endDate - startDate;
+    const second = 1000;
+    const minute = 60 * second;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const month = 30 * day;
+    const year = 365 * day;
+
+    if (diff <= 45 * second)
         return "a few seconds ago";
-    if (diff <= 90 * 1000)
+    if (diff <= 90 * second)
         return "a minute ago";
-    if (diff <= 45 * 60 * 1000)
-        return `${round(diff / (60 * 1000))} minutes ago`;
-    if (diff <= 90 * 60 * 1000)
+    if (diff <= 45 * minute)
+        return `${round(diff / minute)} minutes ago`;
+    if (diff <= 90 * minute)
         return "an hour ago";
-    if (diff <= 22 * 60 * 60 * 1000)
-        return `${round(diff / (60 * 60 * 1000))} hours ago`;
-    if (diff <= 36 * 60 * 60 * 1000)
+    if (diff <= 22 * hour)
+        return `${round(diff / hour)} hours ago`;
+    if (diff <= 36 * hour)
         return "a day ago";
-    if (diff <= 25 * 24 * 60 * 60 * 1000)
-        return `${round(diff / (24 * 60 * 60 * 1000))} days ago`;
-    if (diff <= 45 * 24 * 60 * 60 * 1000)
+    if (diff <= 25 * day)
+        return `${round(diff / day)} days ago`;
+    if (diff <= 45 * day)
         return "a month ago";
-    if (diff <= 345 * 24 * 60 * 60 * 1000)
-        return `${round(diff / (30 * 24 * 60 * 60 * 1000))} months ago`;
-    if (diff <= 545 * 24 * 60 * 60 * 1000)
+    if (diff <= 345 * day)
+        return `${round(diff / month)} months ago`;
+    if (diff <= 545 * day)
         return "a year ago";
 
-    return `${round(diff / (365 * 24 * 60 * 60 * 1000))} years ago`;
+    return `${round(diff / year)} years ago`;
 }
 
 
