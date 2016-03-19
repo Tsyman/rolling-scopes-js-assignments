@@ -595,7 +595,7 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    const cors = [
+    const coordinates = [
         [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
         [{x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}],
         [{x: 0, y: 2}, {x: 1, y: 2}, {x: 2, y: 2}],
@@ -610,9 +610,9 @@ function evaluateTicTacToePosition(position) {
 
     const winner = new Set();
 
-    cors.forEach(value => {
-        let isWin = true;
-        let playerCode = undefined;
+    coordinates.forEach(value => {
+        let isWin = true,
+            playerCode = undefined;
 
         for (let i = 1; i < value.length; i++) {
             let x1 = value[i - 1].x,
@@ -630,7 +630,7 @@ function evaluateTicTacToePosition(position) {
             winner.add(playerCode);
     });
 
-    return winner.size == 0 ? undefined : winner.values().next().value;
+    return winner.values().next().value;
 }
 
 
