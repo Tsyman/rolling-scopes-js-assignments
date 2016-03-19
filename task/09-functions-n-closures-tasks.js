@@ -68,7 +68,7 @@ function getPolynom() {
     var args = Array.from(arguments).reverse();
 
     return (x) => {
-        return args.reduce((previous, current, index) => previous + current * Math.pow(x, index), 0);
+        return args.reduce((prev, curr, index) => prev + curr * Math.pow(x, index), 0);
     };
 }
 

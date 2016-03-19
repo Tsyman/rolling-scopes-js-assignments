@@ -125,20 +125,20 @@ function* getPermutations(chars) {
  */
 function getMostProfitFromStockQuotes(quotes) {
     let maximums = quotes
-        .reduceRight((previous, current) => {
-            if (previous.length == 0)
-                return [current];
+        .reduceRight((prev, curr) => {
+            if (prev.length == 0)
+                return [curr];
 
-            previous.push(Math.max(previous[previous.length - 1], current));
+            prev.push(Math.max(prev[prev.length - 1], curr));
 
-            return previous;
+            return prev;
         }, [])
         .reverse();
 
     maximums.push(0);
 
-    return quotes.reduce((previous, current, index) => {
-        return previous + Math.max(0, maximums[index + 1] - current);
+    return quotes.reduce((prev, curr, index) => {
+        return prev + Math.max(0, maximums[index + 1] - curr);
     }, 0);
 }
 

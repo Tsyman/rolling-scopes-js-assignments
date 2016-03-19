@@ -163,13 +163,13 @@ const PokerRank = {
 
 function compareCards(hand) {
     let cardMap = new Map(), result = "";
-    hand.forEach((value) => {
+    hand.forEach(value => {
         let prev = cardMap.get(value.dig);
 
         cardMap.set(value.dig, prev == undefined ? 1 : prev + 1);
     });
 
-    cardMap.forEach((value) => {
+    cardMap.forEach(value => {
         if (value > 1)
             result += value;
     });
@@ -180,8 +180,8 @@ function compareCards(hand) {
 function isStraight(hand) {
     let lowest = Math.min.apply(null, hand.map(value => value.dig));
 
-    return hand.reduce((previous, current, index) => {
-        return previous && (current.dig - lowest == index);
+    return hand.reduce((prev, curr, index) => {
+        return prev && (curr.dig - lowest == index);
     }, true);
 }
 
@@ -189,8 +189,8 @@ function isAceStraight(hand) {
     hand = hand.map((value) => value.dig == 14 ? 1 : value.dig).sort();
     let lowest = Math.min.apply(null, hand);
 
-    return hand.reduce((previous, current, index) => {
-        return previous && (current - lowest == index);
+    return hand.reduce((prev, curr, index) => {
+        return prev && (curr - lowest == index);
     }, true);
 }
 
@@ -202,8 +202,9 @@ function isFlush(hand) {
 
 function getPokerHandRank(hand) {
     hand = hand
-        .map((value) => {
-            let sec = value.length == 2 ? 1 : 2, dig = value.substr(0, sec),
+        .map(value => {
+            let sec = value.length == 2 ? 1 : 2,
+                dig = value.substr(0, sec),
                 masks = new Map([["♠", 1], ["♣", 2], ["♥", 4], ["♦", 8]]),
                 cards = new Map([["J", 11], ["Q", 12], ["K", 13], ["A", 14]]);
 

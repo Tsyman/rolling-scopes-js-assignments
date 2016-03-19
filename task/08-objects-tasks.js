@@ -195,7 +195,7 @@ MySimpleSelector.prototype = {
         if (!Array.isArray(items) && items != null)
             items = [items];
 
-        return items.reduce((previous, current) => previous + before + current + after, "");
+        return items.reduce((prev, curr) => prev + before + curr + after, "");
     },
 
     stringify: function () {

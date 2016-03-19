@@ -37,7 +37,7 @@ function createCompassPoints() {
             {dir: "W", func: directCoors("N", "W", "f")}
         ];
 
-    items.forEach((item) => {
+    items.forEach(item => {
         result.push({abbreviation: item.dir, azimuth: azimuth});
         azimuth += 11.25;
 
@@ -98,8 +98,8 @@ function* expandBraces(str) {
         if (matches != null) {
             let array = matches[1].split(',');
 
-            array.forEach((current) => {
-                queue.push(item.replace(matches[0], current));
+            array.forEach(curr => {
+                queue.push(item.replace(matches[0], curr));
             });
         } else if (!itemSet.has(item)) {
             itemSet.add(item);
