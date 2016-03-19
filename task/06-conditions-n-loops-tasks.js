@@ -276,7 +276,15 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    return parseInt(String(num).split('').reverse().join(''), 10);
+    let result = 0;
+
+    while (num > 0) {
+        result += num % 10;
+        result *= 10;
+        num = parseInt(num / 10, 10);
+    }
+
+    return result / 10;
 }
 
 
