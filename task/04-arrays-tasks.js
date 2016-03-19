@@ -201,7 +201,7 @@ function getTail(arr, n) {
  */
 function toCsvText(arr) {
     return arr
-        .map(value => value.join(","), "")
+        .map(value => value.join(","))
         .join("\n");
 }
 
@@ -272,9 +272,7 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-    return arr.reduce((previous, current, index) => {
-        return previous.concat((new Array(index + 1)).fill(current));
-    }, []);
+    return arr.reduce((prev, curr, index) => prev.concat((new Array(index + 1)).fill(curr)), []);
 }
 
 
