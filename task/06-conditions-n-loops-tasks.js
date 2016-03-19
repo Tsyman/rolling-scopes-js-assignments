@@ -595,37 +595,42 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    for (let i = 0; i < 3; i++) {
-        let winX = true, winY = true;
+    const cors = [
+        [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
+        [{x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1}],
+        [{x: 0, y: 2}, {x: 1, y: 2}, {x: 2, y: 2}],
 
-        for (let j = 0; j < 3; j++) {
-            if (position[j][i] != position[0][i])
-                winX = false;
+        [{x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2}],
+        [{x: 1, y: 0}, {x: 1, y: 1}, {x: 1, y: 2}],
+        [{x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2}],
 
-            if (position[i][j] != position[i][0])
-                winY = false;
+        [{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}],
+        [{x: 2, y: 0}, {x: 1, y: 1}, {x: 0, y: 2}]
+    ];
+
+    const winner = new Set();
+
+    cors.forEach(value => {
+        let isWin = true;
+        let playerCode = undefined;
+
+        for (let i = 1; i < value.length; i++) {
+            let x1 = value[i - 1].x,
+                y1 = value[i - 1].y,
+                x2 = value[i].x,
+                y2 = value[i].y;
+
+            playerCode = position[y2][x2];
+
+            if (position[y2][x2] != position[y1][x1])
+                isWin = false;
         }
 
-        if (winX &&
-            position[0][i] != undefined)
-            return position[0][i];
+        if (isWin && playerCode != undefined)
+            winner.add(playerCode);
+    });
 
-        if (winY && position[i][0] != undefined)
-            return position[i][0];
-    }
-
-    if (position[0][0] == position[1][1] &&
-        position[0][0] == position[2][2] &&
-        position[1][1] != undefined)
-        return position[1][1];
-
-    if (position[0][2] == position[1][1] &&
-        position[0][2] == position[2][0] &&
-        position[1][1] != undefined)
-        return position[1][1];
-
-
-    return undefined;
+    return winner.size == 0 ? undefined : winner.values().next().value;
 }
 
 
