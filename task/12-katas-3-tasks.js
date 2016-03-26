@@ -164,9 +164,12 @@ function UrlShortener() {
 }
 
 var f = String.fromCharCode;
+var log = function() {
+    console.log.apply(null, arguments);
+};
 
 UrlShortener.prototype = {
-    _compress: function (uncompressed, bitsPerChar, getCharFromInt) {
+     /*_compress: function (uncompressed, bitsPerChar, getCharFromInt) {
         if (uncompressed == null) return "";
         var i, value,
             context_dictionary = {},
@@ -182,6 +185,8 @@ UrlShortener.prototype = {
             context_data_position = 0,
             ii;
 
+        console.log(uncompressed);
+
         for (ii = 0; ii < uncompressed.length; ii += 1) {
             context_c = uncompressed.charAt(ii);
             if (!Object.prototype.hasOwnProperty.call(context_dictionary, context_c)) {
@@ -193,7 +198,9 @@ UrlShortener.prototype = {
             if (Object.prototype.hasOwnProperty.call(context_dictionary, context_wc)) {
                 context_w = context_wc;
             } else {
+                log(context_w, Object.prototype.hasOwnProperty.call(context_dictionaryToCreate, context_w));
                 if (Object.prototype.hasOwnProperty.call(context_dictionaryToCreate, context_w)) {
+                    log(context_w, context_w.charCodeAt(0));
                     if (context_w.charCodeAt(0) < 256) {
                         for (i = 0; i < context_numBits; i++) {
                             context_data_val = (context_data_val << 1);
@@ -274,6 +281,7 @@ UrlShortener.prototype = {
                 context_dictionary[context_wc] = context_dictSize++;
                 context_w = String(context_c);
             }
+            log("-------");
         }
 
         // Output the code for w.
@@ -544,22 +552,27 @@ UrlShortener.prototype = {
             }
 
         }
-    },
+    },*/
 
     encode: function (url) {
-        return this._compress(url, 16, function (a) {
+        /*return this._compress(url, 16, function (a) {
             return f(a);
-        });
+        });*/
+        throw new Error('Not implemented');
     },
 
     decode: function (code) {
-        if (code == null) return "";
+        /*if (code == null) return "";
         if (code == "") return null;
         return this._decompress(code.length, 32768, function (index) {
             return code.charCodeAt(index);
-        });
+        });*/
+        throw new Error('Not implemented');
     }
 };
+
+//let short = new UrlShortener();
+//short.encode("https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul");
 
 module.exports = {
     findStringInSnakingPuzzle: findStringInSnakingPuzzle,

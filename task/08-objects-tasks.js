@@ -134,10 +134,10 @@ function MySimpleSelector() {
 MySimpleSelector.prototype = {
     checkSequence: function (index) {
         if (this.unChangeableFieldes.indexOf(index) != -1 && this.currentStage == index)
-            throw new Error("Cannot set more then one value");
+            throw new Error("Element, id and pseudo-element should not occur more then one time inside the selector");
 
         if (index < this.currentStage)
-            throw new Error("Incorrect arranged");
+            throw new Error("Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element");
 
         this.currentStage = index;
     },
