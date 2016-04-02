@@ -252,17 +252,17 @@ describe('07-yield-tasks', function() {
 
     it.optional('depthTraversalTree should return the sequence of tree nodes in depth-first order', () => {
 
-      /*
-       *     source tree (root = 1):
-       *
-       *            1
-       *          / | \
-       *         2  6  7
-       *        / \     \            =>    { 1, 2, 3, 4, 5, 6, 7, 8 }
-       *       3   4     8
-       *           |
-       *           5
-       */
+        /*
+         *     source tree (root = 1):
+         *
+         *            1
+         *          / | \
+         *         2  6  7
+         *        / \     \            =>    { 1, 2, 3, 4, 5, 6, 7, 8 }
+         *       3   4     8
+         *           |
+         *           5
+         */
 
         var node1 = { n:1 }, node2 = { n:2 }, node3 = { n:3 }, node4 = { n:4 }, node5 = { n:5 }, node6 = { n:6 }, node7 = { n:7 }, node8 = { n:8 };
         node1.children = [ node2, node6, node7 ];
@@ -333,17 +333,17 @@ describe('07-yield-tasks', function() {
 
     it.optional('breadthTraversalTree should return the sequence of tree nodes in depth-first order', () => {
 
-      /*
-       *     source tree (root = 1):
-       *
-       *            1
-       *          / | \
-       *         2  3  4
-       *        / \     \            =>    { 1, 2, 3, 4, 5, 6, 7, 8 }
-       *       5   6     7
-       *           |
-       *           8
-       */
+        /*
+         *     source tree (root = 1):
+         *
+         *            1
+         *          / | \
+         *         2  3  4
+         *        / \     \            =>    { 1, 2, 3, 4, 5, 6, 7, 8 }
+         *       5   6     7
+         *           |
+         *           8
+         */
 
         var node1 = { n:1 }, node2 = { n:2 }, node3 = { n:3 }, node4 = { n:4 }, node5 = { n:5 }, node6 = { n:6 }, node7 = { n:7 }, node8 = { n:8 };
         node1.children = [ node2, node3, node4 ];
@@ -396,49 +396,54 @@ describe('07-yield-tasks', function() {
 
 
     it.optional('mergeSortedSequences should merge two sorted sequences into one sorted sequence', () => {
-        function* Odds() {
-            let i = -1; while(1) yield i += 2;
-        }
-        function* Evens() {
-            let i = 0; while(1) yield i += 2;
-        }
-        function* Zero() { yield 0; }
-        function* Minus1() { yield -1; }
+        const ITEMS_COUNT = 500;
 
-        let odds = Odds();
-        let evens = Evens();
-        let expected = 1;
+        var odds = function* () {
+            for(var i=1; true; i+=2) yield i;
+        };
+        var evens = function* () {
+            for(var i=2; true; i+=2) yield i;
+        };
+        var expected = 1;
+        var count = 0;
         for(let value of tasks.mergeSortedSequences(odds, evens)) {
             assert.equal(
                 value,
                 expected++
             );
-            if (expected>1000) break;
+            count++;
+            if (count==ITEMS_COUNT) break;
         }
+        assert.equal(count, ITEMS_COUNT);
 
-        evens = Evens();
-        var zero = Zero();
+        var zero = function* () { yield 0; }
         expected = 0;
+        count = 0;
         for(let value of tasks.mergeSortedSequences(zero, evens)) {
             assert.equal(
                 value,
                 expected
             );
             expected +=2;
-            if (expected>500) break;
+            count++;
+            if (count == ITEMS_COUNT) break;
         }
-        odds = Odds();
-        var minus1 = Minus1();
+        assert.equal(count, ITEMS_COUNT);
+
+
+        var minus1 = function* () { yield -1; }
         expected = -1;
+        count = 0;
         for(let value of tasks.mergeSortedSequences(odds, minus1)) {
             assert.equal(
                 value,
-                expected,
-                "3"
+                expected
             );
             expected +=2;
-            if (expected>500) break;
+            count++;
+            if (count == ITEMS_COUNT) break;
         }
+        assert.equal(count, ITEMS_COUNT);
 
     });
 });
