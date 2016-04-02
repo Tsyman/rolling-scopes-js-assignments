@@ -285,7 +285,96 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-    throw new Error('Not implemented');
+    const array = figure.split('\n');
+    const pluses = [];
+    const horizontalLines = [];
+    const rectangles = [];
+
+    for (let i = 0; i < array.length; i++)
+        for (let j = 0; j < array[0].length; j++)
+            if (array[i][j] === '+') {
+                pluses.push({x: j, y: i});
+            }
+
+    for (let i = 0; i < pluses.length; i++)
+        for (let j = i + 1; j < pluses.length; j++)
+            if (pluses[i].y === pluses[j].y) {
+                if (checkHorizontalLine(array, pluses[i], pluses[j]))
+                    horizontalLines.push([pluses[i], pluses[j]]);
+            }
+
+    for (let i = 0; i < horizontalLines.length; i++)
+        for (let j = i + 1; j < horizontalLines.length; j++)
+            if (checkRectangle(array, horizontalLines[i], horizontalLines[j])) {
+                rectangles.push([horizontalLines[i], horizontalLines[j]]);
+            }
+
+    for (let i = 0; i < rectangles.length; i++) {
+        let rectangle = drawRectangle(rectangles[i]);
+
+        yield rectangle;
+    }
+}
+
+function checkHorizontalLine(array, s, f) {
+    for (let i = s.x; i <= f.y; i++)
+        if (array[s.y][i] !== '-' && array[s.y][i] !== '+')
+            return false;
+
+    return true;
+}
+
+function checkRectangle(array, top, bottom) {
+    if (top[0].x !== bottom[0].x)
+        return false;
+
+    if (top[1].x !== bottom[1].x)
+        return false;
+
+    const leftX = top[0].x,
+        rightX = top[1].x,
+        topY = top[0].y,
+        bottomY = bottom[0].y;
+
+    for (let j = leftX + 1; j < rightX; j++)
+        if (array[topY][j] === '+' && array[bottomY][j] === '+') {
+            let hasWhiteSpace = false;
+
+            for (let i = topY + 1; i < bottomY; i++)
+                if (array[i][j] === ' ')
+                    hasWhiteSpace = true;
+
+
+            if (!hasWhiteSpace)
+                return false;
+        }
+
+    for (let i = topY + 1; i < bottomY; i++) {
+        if (array[i][leftX] !== '|' && array[i][leftX] !== '+')
+            return false;
+
+        if (array[i][rightX] !== '|' && array[i][rightX] !== '+')
+            return false;
+
+        for (let j = leftX + 1; j < rightX; j++)
+            if (array[i][j] !== ' ')
+                return false;
+    }
+
+    return true;
+}
+
+function drawRectangle(item) {
+    let width = item[0][1].x - item[0][0].x + 1,
+        height = item[1][0].y - item[0][0].y + 1,
+        result = '',
+        topLine = '+' + ('-').repeat(width - 2) + '+' + '\n';
+
+    result += topLine;
+    result += ( '|' + (' ').repeat(width - 2) + '|' + '\n' ).repeat(height - 2);
+    result += topLine;
+
+    return result;
 }
 
 
