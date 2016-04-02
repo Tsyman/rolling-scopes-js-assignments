@@ -173,9 +173,12 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
+    const first = source1();
+    const second = source2();
+
     while (true) {
-        let a = source1.next().value;
-        let b = source2.next().value;
+        let a = first.next().value;
+        let b = second.next().value;
 
         if (a == undefined)
             yield b;
